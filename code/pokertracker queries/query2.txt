@@ -1,0 +1,54 @@
+ERROR ONE
+
+
+SELECT (cash_hand_summary.id_hand) as "id_hand", 
+		(cash_hand_summary.id_site) as "id_site", 
+		(cash_hand_summary.hand_no) as "hand_no", 
+		(cash_hand_summary.id_gametype) as "id_gametype_summary", 
+		(player.player_name) as "str_player", 
+		(cash_hand_summary.card_1) as "id_flop1", 
+		(cash_hand_summary.card_2) as "id_flop2", 
+		(cash_hand_summary.card_3) as "id_flop3", 
+		(lookup_actions_f.action) as "str_actions_f", 
+		(cash_hand_summary.card_4) as "id_turn", 
+		(lookup_actions_t.action) as "str_actions_t", 
+		(cash_hand_summary.card_5) as "id_river", 
+		(lookup_actions_r.action) as "str_actions_r", 
+		(select p.player_name from player p join cash_hand_player_statistics chps using(id_player) 
+			where chps.id_hand = cash_hand_player_statistics.id_hand and not chps.flg_hero and chps.cnt_players = 2) as "str_villain_hu" 
+	FROM     
+		cash_hand_player_statistics , 
+		cash_hand_summary, lookup_actions lookup_actions_t, 
+		lookup_actions lookup_actions_r, 
+		lookup_actions lookup_actions_f, player 
+	WHERE  
+		(cash_hand_summary.id_hand = cash_hand_player_statistics.id_hand  
+		AND 
+		cash_hand_summary.id_limit = cash_hand_player_statistics.id_limit)  
+		AND 
+		(lookup_actions_t.id_action=cash_hand_player_statistics.id_action_t)  
+		AND 
+		(lookup_actions_r.id_action=cash_hand_player_statistics.id_action_r)  
+		AND 
+		(lookup_actions_f.id_action=cash_hand_player_statistics.id_action_f)  
+		AND 
+		(player.id_player = cash_hand_player_statistics.id_player)   
+		AND 
+		(cash_hand_player_statistics.id_player = 
+			(SELECT id_player FROM player WHERE player_name_search=E'chrisfun123'  AND id_site='100'))     
+		AND 
+		(((((((cash_hand_player_statistics.date_played >= '2014/09/01 04:00:00' 
+				AND cash_hand_player_statistics.date_played <= '2015/03/01 04:59:59')))))
+			AND (((((cash_hand_summary.id_site in (100))))))
+			AND (((((cash_hand_summary.id_gametype = 1)))))
+			AND (((((cash_hand_player_statistics.date_played >= '2015/01/01 05:00:00')))))))  
+	ORDER BY 
+		(timezone('UTC',  cash_hand_player_statistics.date_played  + INTERVAL '0 HOURS'))
+		
+		
+
+		
+OTHER ONE	
+
+		
+SELECT (cash_hand_summary.id_hand) as "id_hand", (cash_hand_summary.id_site) as "id_site", (cash_hand_summary.hand_no) as "hand_no", (cash_hand_summary.id_gametype) as "id_gametype_summary", (player.player_name) as "str_player", (cash_hand_summary.card_1) as "id_flop1", (cash_hand_summary.card_2) as "id_flop2", (cash_hand_summary.card_3) as "id_flop3", (lookup_actions_f.action) as "str_actions_f", (cash_hand_summary.card_4) as "id_turn", (lookup_actions_t.action) as "str_actions_t", (cash_hand_summary.card_5) as "id_river", (lookup_actions_r.action) as "str_actions_r", (select p.player_name from player p join cash_hand_player_statistics chps using(id_player) where chps.id_hand = cash_hand_player_statistics.id_hand and not chps.flg_hero and chps.cnt_players = 2) as "str_villain_hu" FROM     cash_hand_player_statistics , cash_hand_summary, lookup_actions lookup_actions_t, lookup_actions lookup_actions_r, lookup_actions lookup_actions_f, player WHERE  (cash_hand_summary.id_hand = cash_hand_player_statistics.id_hand  AND cash_hand_summary.id_limit = cash_hand_player_statistics.id_limit)  AND (lookup_actions_t.id_action=cash_hand_player_statistics.id_action_t)  AND (lookup_actions_r.id_action=cash_hand_player_statistics.id_action_r)  AND (lookup_actions_f.id_action=cash_hand_player_statistics.id_action_f)  AND (player.id_player = cash_hand_player_statistics.id_player)   AND (cash_hand_player_statistics.id_player = (SELECT id_player FROM player WHERE player_name_search=E'chrisfun123'  AND id_site='100'))     AND (((((((cash_hand_player_statistics.date_played >= '2014/09/01 04:00:00' AND cash_hand_player_statistics.date_played <= '2015/03/01 04:59:59')))))AND (((((cash_hand_summary.id_site in (100))))))AND (((((cash_hand_summary.id_gametype = 1)))))AND (((((cash_hand_player_statistics.date_played >= '2015/01/01 05:00:00')))))))  ORDER BY (timezone('UTC',  cash_hand_player_statistics.date_played  + INTERVAL '0 HOURS')) desc
